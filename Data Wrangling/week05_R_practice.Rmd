@@ -1,0 +1,153 @@
+---
+title: "Week 5 R Practice"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+You can execute code in a chunk chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(babynames)
+library(bayesrules)
+library(fivethirtyeight)
+```
+
+
+## First practice problem
+
+* In the next code chunk replace YOUR CODE HERE with code to restrict to babies born in 2000, named Trenton, and whose sex is "M".
+
+
+```{r filter and select pracice}
+babynames %>%
+  filter(YOUR CODE HERE)
+```
+
+* Try using `=` instead of `==` to see what the error message looks like.
+
+## Second practice problem
+
+* Now add a line to your previous code so that the variable `prop` is dropped from the output.
+
+## Third practice problem
+
+* Create a new variable that shows the `prop` variable as a percentage (don't worry about the `%` symbol).
+
+```{r mutate pracice}
+babynames %>%
+  mutate(YOUR CODE HERE)
+```
+
+## Fourth practice problem
+
+* In the the code chunk below, replace the part labelled YOUR CODE HERE to find 1) the total number of babies accounted for, 2) the single most common name over all of the years and both sexes, and 3) the highest value of prop.
+
+```{r summarize practice}
+babynames %>%
+  YOUR CODE HERE
+```
+
+## Fifth practice problem
+
+* In the the code chunk below, replace the part labelled YOUR CODE HERE to 1) group the names by sex and name and then 2) use summarize to find the single most common name over all of the years for each sex.
+
+```{r group_by practice}
+babynames %>%
+  YOUR CODE HERE
+```
+
+## Sixth practice problem: Exercise 5.2
+
+Visualize the Poisson likelihood from Exercise 5.2(a):
+
+```{r ex5-2-1}
+plot_poisson_likelihood(YOUR CODE HERE)
+```
+
+
+## Seventh practice problem: Exercise 5.7
+
+Define, plot, and discuss the total number of goals scored per game:
+
+```{r ex5-7-1}
+library(fivethirtyeight)
+data("wwc_2019_matches")
+wwc_2019_matches <- wwc_2019_matches %>% 
+  mutate(total_goals = score1 + score2) 
+
+wwc_2019_matches %>% 
+  ggplot(aes(x = total_goals)) +
+  geom_histogram()
+```
+
+What do the following lines of code calculate? How do they help with deriving the posterior distribution for $\lambda$?
+
+```{r ex5-7-2}
+wwc_2019_matches %>% select(total_goals) %>% sum
+wwc_2019_matches %>% select(total_goals) %>% dim
+```
+
+
+With the information above and the information given in Exercise 5.7, you should have identified the posterior model of $\lambda$. Verify it with the following code:
+
+```{r ex5-7-3}
+summarize_gamma_poisson(YOUR CODE HERE)
+```
+
+Plot the prior pdf, likelihood function, and posterior pdf of $\lambda$. Describe the evolution in your understanding of $\lambda$ from the prior to the posterior.
+
+```{r ex5-7-4}
+plot_gamma_poisson(YOUR CODE HERE)
+```
+
+## Eighth practice problem: Exercise 5.9
+
+Tune and plot an appropriate Normal prior model for $\mu$. 
+
+```{r ex5-9-1}
+plot_normal(YOUR CODE HERE)
+```
+
+What is the prior probability that, on average, the stock price _goes down_? 
+
+```{r ex5-9-2}
+pnorm(YOUR CODE HERE)
+```
+
+What is the prior probability that, on average, your stock price goes up by more than 8 dollars per day?
+
+```{r ex5-9-3}
+pnorm(YOUR CODE HERE)
+```
+
+## Ninth practice problem
+
+The `weather_perth` data in the `bayesrules` package includes 1000 daily observations of 3 p.m. temperatures in Perth (`temp3pm`). Plot this data and discuss whether it’s reasonable to assume a Normal model for the temperature data.
+
+```{r ex5-13-1}
+data(weather_perth)
+weather_perth %>% 
+  ggplot(aes(x = YOUR CODE HERE)) +
+  geom_histogram()
+```
+
+Identify the posterior model of $\mu$ and verify your answer:
+
+```{r ex5-13-2}
+summarize_normal_normal(YOUR CODE HERE)
+```
+
+Plot the prior pdf, likelihood function, and posterior pdf for $\mu$. Describe the evolution in your understanding of $\mu$ from the prior to the posterior.
+
+```{r ex5-13-3}
+plot_normal_normal(YOUR CODE HERE)
+```
+
